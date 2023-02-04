@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { atom, selector, useRecoilValue } from 'recoil';
+import TodoItemCreator from './components/TodoItemCreator';
+import TodoItem from './components/TodoItem';
+
+export const todoListState = atom({
+  key: 'todoListState',
+  default: [],
+});
 
 function App() {
+  const todoList = useRecoilValue(todoListState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TodoItemCreator />
+      {todoList.map((todoItem) => (
+        <TodoItem key={todoItem.id} item={todoItem} />
+      ))}
     </div>
   );
 }
